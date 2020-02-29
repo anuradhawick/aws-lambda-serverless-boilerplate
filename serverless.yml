@@ -1,0 +1,28 @@
+custom:
+  config: ${file(./${opt:stage}.env.yml):config}
+  env: ${file(./${opt:stage}.env.yml):env}
+
+service: ${file(./${opt:service}/service.yml):service}
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: ${opt:stage}
+  region: ${self:custom.config.region}
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - 's3:*'
+      Resource:
+        - '*'
+    - Effect: 'Allow'
+      Action:
+        - 'cognito-idp:*'
+      Resource:
+        - '*'
+
+package: ${file(./${opt:service}/service.yml):package}
+functions: ${file(./${opt:service}/service.yml):functions}

@@ -1,0 +1,28 @@
+package:
+  exclude:
+    - '**/*'
+  include:
+    - node_modules/**
+    - utils/**
+    - second-service/**
+
+service: second-service
+
+functions:
+  administration-service:
+    handler: administration-service/admin-main.main
+    name:  ${self:service}-${opt:stage}
+    environment:
+      MONGODB_ATLAS_CLUSTER_URI: ${self:custom.env.MONGODB_ATLAS_CLUSTER_URI}
+      user_pool_id: ${self:custom.config.user_pool_id}
+      BUCKET_NAME: ${self:custom.env.BUCKET_NAME}
+      BUCKET_REGION: ${self:custom.env.BUCKET_REGION}
+    events:
+      - http:
+          method: get
+          path: actions
+          cors: true
+          # Example authorization with a user pool
+          authorizer:
+            name: vinyl-authorizer
+            arn:  ${self:custom.config.userpool_authorizer_arn}

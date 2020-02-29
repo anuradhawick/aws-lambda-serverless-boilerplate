@@ -1,0 +1,23 @@
+package:
+  exclude:
+    - '**/*'
+  include:
+    - node_modules/**
+    - utils/**
+    - first-service/**
+
+service: first-service
+
+functions:
+  first-service:
+      handler: market-service/market-main.main
+      name:  ${self:service}-${opt:stage}
+      environment:
+        MONGODB_ATLAS_CLUSTER_URI: ${self:custom.env.MONGODB_ATLAS_CLUSTER_URI}
+        BUCKET_NAME: ${self:custom.env.BUCKET_NAME}
+        BUCKET_REGION: ${self:custom.env.BUCKET_REGION}
+      events:
+        - http:
+            method: get
+            path: details
+            cors: true
