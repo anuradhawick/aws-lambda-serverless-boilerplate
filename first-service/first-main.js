@@ -12,9 +12,9 @@ exports.main = (event, context, callback) => {
    */
   router.route(
     'GET',
-    '/details',
+    '/data',
     (event, context, callback) => {
-      first_functions.function_name(event.queryStringParameters).then((data) => {
+      first_functions.data(event.queryStringParameters).then((data) => {
         callback(null, lambdaRouter.builResponse(200, {
           ...data,
           success: true

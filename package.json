@@ -8,16 +8,9 @@
   },
   "author": "Anuradha Wickramarachchi <anuradhawick@gmail.com> (https://medium.com/@anuradhawick)",
   "license": "ISC",
-  "dependencies": {
-    "aws-sdk": "^2.466.0",
-    "cheerio": "^1.0.0-rc.3",
-    "cors": "^2.8.5",
-    "html-to-text": "^5.1.1",
-    "jimp": "^0.8.5",
-    "lodash": "^4.17.15",
-    "mongodb": "^3.2.6"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "http-proxy": "^1.18.0",
     "serverless-offline": "^4.10.6"
   }
 }

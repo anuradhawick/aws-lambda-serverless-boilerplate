@@ -10,7 +10,7 @@ service: first-service
 
 functions:
   first-service:
-      handler: market-service/market-main.main
+      handler: first-service/first-main.main
       name:  ${self:service}-${opt:stage}
       environment:
         MONGODB_ATLAS_CLUSTER_URI: ${self:custom.env.MONGODB_ATLAS_CLUSTER_URI}
@@ -19,5 +19,5 @@ functions:
       events:
         - http:
             method: get
-            path: details
+            path: data
             cors: true

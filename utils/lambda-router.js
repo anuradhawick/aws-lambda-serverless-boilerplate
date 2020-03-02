@@ -4,6 +4,8 @@ function Router(event, context, callback) {
     this.callback = callback;
 
     this.route = function (method, path, handler) {
+        console.log(JSON.stringify(event))
+        
         if (this.method === method && this.path === path) {
             try {
                 if (method !== 'GET') {

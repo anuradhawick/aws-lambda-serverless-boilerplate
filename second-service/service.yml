@@ -9,8 +9,8 @@ package:
 service: second-service
 
 functions:
-  administration-service:
-    handler: administration-service/admin-main.main
+  second-service:
+    handler: second-service/second-main.main
     name:  ${self:service}-${opt:stage}
     environment:
       MONGODB_ATLAS_CLUSTER_URI: ${self:custom.env.MONGODB_ATLAS_CLUSTER_URI}
@@ -20,7 +20,7 @@ functions:
     events:
       - http:
           method: get
-          path: actions
+          path: users
           cors: true
           # Example authorization with a user pool
           authorizer:
