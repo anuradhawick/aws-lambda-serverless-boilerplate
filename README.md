@@ -59,6 +59,8 @@ const router = new lambdaRouter.Router(event, context, callback);
 
 // calling route method
 // acts as a switch case, pass method, path template string and a handler
+// call this router.route function as many times as you like with your methods and paths
+// for readability you could implement the function logic in a separate functions file as I have done
 router.route(
     'GET',
     '/data',
