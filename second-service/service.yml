@@ -1,6 +1,9 @@
+# packages to include
 package:
+  # exclude all folders and files
   exclude:
     - '**/*'
+  # include all that is relevant to the service
   include:
     - node_modules/**
     - utils/**
@@ -19,6 +22,9 @@ functions:
       BUCKET_REGION: ${self:custom.env.BUCKET_REGION}
     events:
       - http:
+          # implementing GET request to the end point /users of second service.
+          # note that we do not have base path PATH1 here since it is not requires as we
+          # are already in service of PATH1
           method: get
           path: users
           cors: true

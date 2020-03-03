@@ -1,17 +1,23 @@
+# These configs are stage specific configs. Loaded in deploy time using --stage command.
+# Name your config yml files as STAGE_NAME.env.yml for clarity
 custom:
   config: ${file(./${opt:stage}.env.yml):config}
   env: ${file(./${opt:stage}.env.yml):env}
 
 service: ${file(./${opt:service}/service.yml):service}
 
+# Plugin for running the offtine version for testing
 plugins:
   - serverless-offline
 
 provider:
   name: aws
+  # Node js version or any other language version you like. Node is my love!
   runtime: nodejs10.x
+  # Stage is taken from the --stage option in command line.
   stage: ${opt:stage}
   region: ${self:custom.config.region}
+  # These statements can be moved to functions' yml files for a more fine grained control
   iamRoleStatements:
     - Effect: 'Allow'
       Action:
@@ -24,5 +30,9 @@ provider:
       Resource:
         - '*'
 
+# load package from the --service option.
+# Option should be the name of the relevant folder
+# The service folder should have a service.yml file which contain related packages to include and functions to deploy
+# Try to limit one function per service since it will avoid potential resource limit hit in future, which is 200.
 package: ${file(./${opt:service}/service.yml):package}
 functions: ${file(./${opt:service}/service.yml):functions}

@@ -1,6 +1,9 @@
+# packages to include
 package:
+  # exclude all folders and files
   exclude:
     - '**/*'
+  # include all that is relevant to the service
   include:
     - node_modules/**
     - utils/**
@@ -17,7 +20,15 @@ functions:
         BUCKET_NAME: ${self:custom.env.BUCKET_NAME}
         BUCKET_REGION: ${self:custom.env.BUCKET_REGION}
       events:
+        # implementing GET requests to the end points /data of second service.
+        # note that we do not have base path PATH2 here since it is not requires as we
+        # are already in service of PATH2
         - http:
             method: get
             path: data
+            cors: true
+        - http:
+            method: get
+            # taskId is a path parameter. You can have as many as you like
+            path: data/{taskId}
             cors: true

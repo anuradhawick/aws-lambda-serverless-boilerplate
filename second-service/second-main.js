@@ -8,7 +8,7 @@ exports.main = (event, context, callback) => {
   const router = new lambdaRouter.Router(event, context, callback);
 
   /**
-   * search posts
+   * get users
    */
   router.route(
     'GET',

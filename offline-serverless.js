@@ -35,4 +35,5 @@ const server = http.createServer(function(req, res) {
   }
 });
 
+// This is the server port which all requests shall be made to
 server.listen(8080);
