@@ -6,12 +6,35 @@ function Router(event, context, callback) {
     this.method = event.httpMethod;
     // request context callback
     this.callback = callback;
+    // caching authorizer for validations
+    this.authorizer = event.requestContext.authorizer;
+
+    // Validate Roles
+    this.is_authorized = (roles) => {
+        let authorized = true;
+
+        if (this.authorizer.claims['cognito:groups'] instanceof Array) {
+          _.each(roles, role => {
+            authorized = authorized && _.findIndex(claims['cognito:groups'], (group) => group === role) !== -1;
+          })
+          return authorized;
+        } else {
+          _.each(roles, role => {
+            authorized = authorized && _.findIndex(claims['cognito:groups'].split(','), (group) => group === role) !== -1;
+          })
+          return authorized;
+        }
+      };
 
     // Main route function 
-    this.route = function (method, path, handler) {
+    this.route = function (method, path, handler, roles = []) {
         console.log(JSON.stringify(event))
+        // check if roles are satisfied
+        if (!_.isEmpty(roles) && !this.is_authorized(roles)) {
+            this.callback(null, builResponse(403, "Unauthorized Request"));
+        }
         // calling the passed handler if the designated method and path matches the request
-        if (this.method === method && this.path === path) {
+        else if (this.method === method && this.path === path) {
             try {
                 // event body is a string and shall be parsed to JSON unless the request is of type GET
                 if (method !== 'GET') {
