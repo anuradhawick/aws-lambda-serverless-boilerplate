@@ -5,6 +5,8 @@ An easy to use scalable boilerplate for AWS serverless deployment. Contains key 
 3. Database connector
 4. Offline Runner  
 
+Read the blog in [Medium](https://towardsdatascience.com/serverless-a-painless-aws-boilerplate-e5ec3b4fb609){:target="_blank"}
+
 ## Adding services
 
 * Create a folder for service
